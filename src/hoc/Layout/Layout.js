@@ -11,12 +11,15 @@ export default class Layout extends Component {
         menu: false
     }
 
+    // Переключатель кнопки menu: !menu
     toggleMenuHandler = () => {
         this.setState({
             menu: !this.state.menu
         })
     }
 
+
+    // Переключатель кнопки menu: false
     menuCloseHandler = () => {
         this.setState({
             menu: false
@@ -34,3 +37,14 @@ export default class Layout extends Component {
         </div>)
     }
 }
+
+
+
+
+
+
+/* 
+
+Все выполняется за счет классов в css, здесь только триггеры для их установки или удаления в DOM
+
+*/

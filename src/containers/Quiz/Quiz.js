@@ -9,8 +9,8 @@ import classes from './Quiz.module.scss';
 export default class Quiz extends Component {
 
     state = {
-        results: {},
-        isFinished: false,
+        results: {}, // отвечает за количество правильных вопросов
+        isFinished: false, // отвечает за окончание теста
         activeQuestion: 0, // отвечает за текущий вопрос
         answerStateMessage: null, // отвечает за сообщение о правильности ответа
         quiz: [
@@ -39,21 +39,27 @@ export default class Quiz extends Component {
         ]
     }
 
+     
+
     onAnswerClickHandler = (answerId) => {
         
-        // Если answerStateMessage не null и ответ правильный прервать функцию
+        // Если answerStateMessage не null и ответ правильный прервать функцию,
         // чтобы при многоразовом клике на правильный ответ не закончить тест
+        
         if(this.state.answerStateMessage) {
             const key = Object.keys(this.state.answerStateMessage)[0]
             if(this.state.answerStateMessage[key] === "success") {
                 return
             }
         }
-
-        const question = this.state.quiz[this.state.activeQuestion] // взять из массива quiz активный вопрос    
+ 
+        const question = this.state.quiz[this.state.activeQuestion] // взять из массива quiz активный вопрос (тек. значение activeQuestion)    
         const {results} = this.state
+        
         // Если ответ правильный
         if (question.rightAnswerId === answerId) {
+
+            // Если в result нет отвеченного вопроса (его id) тогда добавить его с 
             if(!results[question.id]) {
                 results[question.id] = 'success'
             }
@@ -72,6 +78,7 @@ export default class Quiz extends Component {
                         activeQuestion: state.activeQuestion++, // переходим к след. вопросу (это создаст новый рендер)
                         answerStateMessage: null, // сбрасываем объект сообщений
                     }))
+                    console.log(this.state.activeQuestion)
                 }
                 clearTimeout(timer)
             }, 1000)
@@ -87,13 +94,19 @@ export default class Quiz extends Component {
         
     }
 
+
+    // Сбрасываем тест
     onRetryHandler = () => {
         this.setState({
             results: {},
             isFinished: false,
-            activeQuestion: 0, // отвечает за текущий вопрос
-            answerStateMessage: null, // отвечает за сообщение о правильности ответа
+            activeQuestion: 0, 
+            answerStateMessage: null,
         })
+    }
+
+    componentDidMount() {
+        // console.log('Quiz ID = ', this.props.match.params.id)
     }
 
     isQuizFinished = () => {
@@ -127,3 +140,12 @@ export default class Quiz extends Component {
         )
     }
 }
+
+
+
+
+/* 
+
+Quiz - это обертка для окна теста, в нем изменяются стейты
+
+*/

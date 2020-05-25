@@ -14,6 +14,7 @@ class App extends Component {
   render() {
     return (
       <Layout>
+        
         <Switch>
           <Route path="/auth" component={Auth}/>
           <Route path="/quiz-creator" component={QuizCreator}/>
@@ -27,10 +28,6 @@ class App extends Component {
 }
 
 export default App;
-
-
-
-
 
 
 

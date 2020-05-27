@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import axios from '../../axios/axios-quiz'
 
 import Button from '../../components/ui/Button/Button'
 import Input from '../../components/ui/Input/Input'
@@ -74,9 +75,15 @@ export default class QuizCreator extends Component {
         })
     }
 
-    createQuizHandler = (e) => {
+    createQuizHandler = async (e) => {
         e.preventDefault()
-        console.log(this.state.quiz)
+        try {
+            const res = await axios.post('/quizes.json', this.state.quiz)
+            
+
+        } catch(e) {
+            console.log(e)
+        }
     }
 
     inputChangeHandler = (value, controlName) => {
@@ -115,6 +122,8 @@ export default class QuizCreator extends Component {
             </Auxiliary>)
         })
     }
+
+ 
 
     render() {
   

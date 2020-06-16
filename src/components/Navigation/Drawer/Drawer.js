@@ -5,6 +5,8 @@ import Backdrop from '../../ui/Backdrop/Backdrop'
 
 import classes from './Drawer.module.scss'
 
+
+// Ставим ссылки для основного меню
 const links = [
     {to: '/', label: 'Список', exact: true},
     {to: '/auth', label: 'Авторизация', exact: false},
@@ -14,7 +16,7 @@ const links = [
 export default class Drawer extends Component {
     
     clickHandler = () => {
-        this.props.onClose()
+        this.props.onClose() // При клике на ссылку меню закрывается
     }
 
     renderLinks = () => {

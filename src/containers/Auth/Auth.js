@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
-import axios from 'axios'
+import {connect} from 'react-redux'
+
+import {auth} from '../../store/actions/auth'
 
 import classes from './Auth.module.scss'
 import Button from '../../components/ui/Button/Button'
@@ -10,11 +12,11 @@ function validateEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 
-export default class Auth extends Component {
+class Auth extends Component {
 
     state = {
-        isFormValid: false,
-        formControls: {
+        isFormValid: false, // Будет false пока все поля не будут валидными
+        formControls: { // Для каждого поля ввода настраиваем валидацию
             email: {
                 value: '',
                 type: 'email',
@@ -42,39 +44,33 @@ export default class Auth extends Component {
         }
     }
 
-    loginHandler = async () => {
-        const authData = {
-            email: this.state.formControls.email.value,
-            password: this.state.formControls.password.value,
-            returnSecureToken: true
-        }
-        try {
+    loginHandler = () => {
+        this.props.auth(
+            this.state.formControls.email.value,
+            this.state.formControls.password.value,
+            true)
+
+        /* try {
             const res = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBKzBU_Ewrv1fZ-Ps8Q_A7EHJff9scYLgI', authData)
             console.log(res)
         } catch(e) {
 
-        }
+        } */
     }
 
-    registerHandler = async () => {
-        const authData = {
-            email: this.state.formControls.email.value,
-            password: this.state.formControls.password.value,
-            returnSecureToken: true
-        }
-        try {
-            const res = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBKzBU_Ewrv1fZ-Ps8Q_A7EHJff9scYLgI', authData)
-            console.log(res.data)
-        } catch(e) {
-
-        }
+    registerHandler = () => {
+        this.props.auth(
+            this.state.formControls.email.value,
+            this.state.formControls.password.value,
+            true)
+        
+        
     }
 
     submitHandler = (e) => {
         e.preventDefault()
     }
 
-    
 
     validateControl(value, validation) {
         if(!validation) {return true}
@@ -150,3 +146,14 @@ export default class Auth extends Component {
         )
     }
 }
+
+
+
+function mapDispatchToProps(dispatch) {
+    return {
+        auth: (email, password, isLogin) => dispatch(auth(email, password, isLogin))
+    }
+}
+
+
+export default connect(null, mapDispatchToProps)(Auth)

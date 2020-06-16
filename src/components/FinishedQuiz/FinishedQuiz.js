@@ -7,7 +7,7 @@ import Button from '../../components/ui/Button/Button'
 const  FinishedQuiz = props => {
     
     const {results, quiz, onRetry} = props
-
+ 
     const successCount = Object.keys(results).reduce((total, key) => {
         if(results[key] === 'success') {
             total++

@@ -44,6 +44,7 @@ class Auth extends Component {
         }
     }
 
+
     loginHandler = () => {
         this.props.auth(
             this.state.formControls.email.value,
@@ -70,7 +71,6 @@ class Auth extends Component {
     submitHandler = (e) => {
         e.preventDefault()
     }
-
 
     validateControl(value, validation) {
         if(!validation) {return true}
@@ -130,6 +130,7 @@ class Auth extends Component {
         })
     }
     
+    
     render() {
         return (
             <div className={classes.Auth}>
@@ -146,6 +147,9 @@ class Auth extends Component {
         )
     }
 }
+
+
+
 
 
 

@@ -98,7 +98,7 @@ class Auth extends Component {
  
 
         control.value = e.target.value // Мутируем control, ставим свойству value текущее значение
-        control.touched = true // Пользователь начал вводить в поле
+        control.touched = true // Пользователь начал что-то вводить в поле
         control.valid = this.validateControl(control.value, control.validation) // Проверка валидности
 
         formControls[controlName] = control // Готовим новый объект formControls для переопределния стейта
@@ -107,7 +107,8 @@ class Auth extends Component {
         Object.keys(formControls).forEach(name => {
             isFormValid = formControls[name].valid && isFormValid // Форма прошла проверку
         })
-
+        
+        console.log(e.target.value)
         this.setState({
             isFormValid,
             formControls, 
@@ -122,10 +123,11 @@ class Auth extends Component {
       
             return (
                 
-                <Input key={controlName + i} 
-                {...control}
-                onChange={(e) => this.onChangeHandler(e, controlName)} // Привязываем обработчик изменения поля, передаем каждому controlName для последующего доступа к formControls
-                shouldValidate={!!control.validation}/> // Должно ли поле волидироваться, то есть ли такое свойство как validation у control (!!control.validation)
+                <Input 
+                    key={controlName + i} 
+                    {...control}
+                    onChange={(e) => this.onChangeHandler(e, controlName)} // Привязываем обработчик изменения поля, передаем каждому controlName для последующего доступа к formControls
+                    shouldValidate={!!control.validation} /> // Должно ли поле волидироваться, то есть ли такое свойство как validation у control (!!control.validation)
             )
         })
     }
